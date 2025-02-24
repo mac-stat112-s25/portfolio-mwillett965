@@ -3,3 +3,140 @@ title: "Univariate Viz"
 ---
 
 Use this file for practice with the **univariate viz** in-class activity.  Refer to the class website for details.
+
+```{r}
+# Import data
+hikes <- read.csv("https://mac-stat.github.io/data/high_peaks.csv")
+View(hikes)
+```
+
+
+# Exercise 1
+```{r}
+head(hikes)
+```
+
+# Exercise 2
+```{r}
+# Use the ggplot function
+ggplot(hikes, aes(x = rating))
+```
+```{r}
+# Load the package
+library(tidyverse)
+```
+# Exercise 3
+```{r}
+ggplot(hikes, aes(x = rating))
+```
+
+# Exercise 4
+```{r}
+# adds bars with the count of how many in each rating
+ggplot(hikes, aes(x = rating)) +
+  geom_bar()
+```
+
+```{r}
+# Builds graph and capitalizes the title of x and y axis
+ggplot(hikes, aes(x = rating)) +
+  geom_bar() +
+  labs(x = "Rating", y = "Number of hikes")
+```
+
+```{r}
+# adds bars and makes them blue
+ggplot(hikes, aes(x = rating)) +
+  geom_bar(fill = "blue") +
+  labs(x = "Rating", y = "Number of hikes")
+```
+
+```{r}
+# bar graph filled with blue with orange outline
+ggplot(hikes, aes(x = rating)) +
+  geom_bar(color = "orange", fill = "blue") +
+  labs(x = "Rating", y = "Number of hikes")
+```
+
+```{r}
+# bar graph with blue and orange outling but just a grid background
+ggplot(hikes, aes(x = rating)) +
+  geom_bar(color = "orange", fill = "blue")  +
+  labs(x = "Rating", y = "Number of hikes") +
+  theme_minimal()
+```
+
+# Exercise 8
+```{r}
+ggplot(hikes, aes(x = elevation)) + geom_bar()
+```
+
+# Exercise 9
+```{r}
+# makes a histogram
+ggplot(hikes, aes(x = elevation)) +
+  geom_histogram()
+```
+
+```{r}
+# seperartes the bars of the histogram with a white line
+ggplot(hikes, aes(x = elevation)) +
+  geom_histogram(color = "white") 
+```
+
+```{r}
+# white outline with a blue fill
+ggplot(hikes, aes(x = elevation)) +
+  geom_histogram(color = "white", fill = "blue") 
+```
+
+```{r}
+# clarifys the x and y axis titles
+ggplot(hikes, aes(x = elevation)) +
+  geom_histogram(color = "white") +
+  labs(x = "Elevation (feet)", y = "Number of hikes")
+```
+
+```{r}
+# made the bars thicker and combined setions
+ggplot(hikes, aes(x = elevation)) +
+  geom_histogram(color = "white", binwidth = 50) +
+  labs(x = "Elevation (feet)", y = "Number of hikes")
+```
+
+```{r}
+#made the bars thinner and changed their color to white
+ggplot(hikes, aes(x = elevation)) +
+  geom_histogram(color = "white", binwidth = 5) +
+  labs(x = "Elevation (feet)", y = "Number of hikes")
+```
+
+```{r}
+# made the width thicker than the orignal
+ggplot(hikes, aes(x = elevation)) +
+  geom_histogram(color = "white", binwidth = 200) +
+  labs(x = "Elevation (feet)", y = "Number of hikes")
+```
+
+# Exercise 11
+```{r}
+#makes line blue
+ggplot(hikes, aes(x = elevation)) +
+  geom_density(color = "blue")
+```
+
+```{r}
+# fills everyting under line with blue
+ggplot(hikes, aes(x = elevation)) +
+  geom_density(fill = "blue")
+```
+
+# Exercise 14
+```{r}
+# Data on students in this class
+survey <- read.csv("https://hash-mac.github.io/stat112site-s25/data/survey.csv")
+
+# World Cup data
+world_cup <- read.csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-11-29/worldcups.csv")
+```
+

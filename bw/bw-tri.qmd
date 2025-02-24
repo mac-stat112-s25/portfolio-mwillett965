@@ -3,3 +3,18 @@ title: "Trivariate Viz"
 ---
 
 Use this file to generate a professional looking **trivariate** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
+
+```{r}
+education <- read.csv("https://mac-stat.github.io/data/sat.csv")
+```
+
+```{r}
+#| fig-alt: "The graph shows the relationship between teacher salary, expenses of a school, and SAT scores. It seems to show lower SAT scores for schools that spend more overall and on teacher salaries."
+ggplot(education, aes(y = expend, x = sat, color = salary)) +
+  geom_point() +
+  geom_smooth(se=FALSE, alpha = 0.5) +
+  labs(x = "Average SAT score", y = "Expdeture", color = "Average Salery of Teacher") +
+  theme_minimal() +
+  scale_color_viridis_c()
+```
+ 

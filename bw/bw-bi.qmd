@@ -3,3 +3,16 @@ title: "Bivariate Viz"
 ---
 
 Use this file to generate a professional looking **bivariate** visualization.  The visualization will not perfect the first time but you are expected to improve it throughout the semester especially after covering advanced topics such as effective viz.
+
+```{r}
+elections <- read.csv("https://mac-stat.github.io/data/election_2020_county.csv")
+```
+
+```{r}
+#| fig-alt: "A scatter plot that compairs the percentage of votdrs in a county that voted republcan in the 202 US election to the median rent int the county. The graph shows that counties with a higher percentage of republucan voters also has a lower median rent."
+ggplot(elections, aes(y = repub_pct_20, x = median_rent)) +
+  geom_point() +
+  labs(x = "Median Rent (by County)", y = "Percent Voted Republican in 2020", caption = "Percent of a county that voted republican in the 2020 US election compaed to the median rent in that county") +
+  theme_minimal()
+```
+

@@ -22,6 +22,7 @@ book:
   
   chapters:
     - index.qmd
+    - ica/quarto-demo.qmd
 
     - part: "Best Work"
       chapters: 
