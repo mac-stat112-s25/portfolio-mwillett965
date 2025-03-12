@@ -1,0 +1,64 @@
+```{r}
+library(tidyverse)
+penguins <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv')
+```
+
+```{r}
+penguin_avg <- penguins |> 
+  group_by(species, sex) |> 
+  summarize(avg_body_mass = mean(body_mass_g, na.rm = TRUE)) |> 
+  na.omit()
+```
+
+```{r}
+
+penguin_avg |> 
+pivot_wider(names_from = sex, values_from = avg_body_mass)
+
+```
+
+```{r}
+food <- data.frame(
+  customer = rep(c("A", "B"), each = 3),
+  restaurant = rep(c("Shish", "FrenchMeadow", "DunnBros"), 2),
+  order = c("falafel", "salad", "coffee", "baklava", "pastry", "tea")
+)
+food
+```
+
+
+
+
+#Exercise 1
+```{r}
+sleep_wide <- read.csv("https://mac-stat.github.io/data/sleep_wide.csv")
+
+head(sleep_wide)
+```
+
+```{r}
+sleep_long <- sleep_wide |>
+  pivot_longer(cols = -Subject,
+               names_to = "day",
+               names_prefix = "day_",
+               values_to = "reaction_time")
+
+head(sleep_long)
+```
+
+
+```{r}
+ ggplot(sleep_long, aes(x = day, y = reaction_time, color = Subject)) +
+  geom_line()
+```
+
+# Exercise 5
+```{r}
+# Load data
+library(tidyr)
+data("billboard")
+
+# Check it out
+head(billboard)
+```
+

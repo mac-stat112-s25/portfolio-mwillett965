@@ -1,0 +1,80 @@
+```{r}
+library(tidyverse)
+elections <- read.csv("https://mac-stat.github.io/data/election_2020_county.csv") |> 
+  select(state_abbr, historical, county_name, total_votes_20, repub_pct_20, dem_pct_20) |> 
+  mutate(dem_support_20 = case_when(
+    (repub_pct_20 - dem_pct_20 >= 5) ~ "low",
+    (repub_pct_20 - dem_pct_20 <= -5) ~ "high",
+    .default = "medium"
+  ))
+
+# Check it out
+head(elections)  
+```
+
+```{r}
+ggplot(elections, aes(x = dem_support_20)) + 
+  geom_bar()
+
+elections |> 
+  count(dem_support_20)
+```
+
+```{r}
+library(ggridges)
+elections |> 
+  ggplot(aes(x = repub_pct_20, y = state_abbr, fill = historical)) + 
+    geom_density_ridges() + 
+    scale_fill_manual(values = c("blue", "purple", "red"))
+```
+
+```{r}
+# Since we might want states to be alphabetical in other parts of our analysis,
+# we'll pipe the data into the ggplot without storing it:
+elections |> 
+  mutate(state_abbr = fct_reorder(state_abbr, repub_pct_20, .fun = "median")) |> 
+  ggplot(aes(x = repub_pct_20, y = state_abbr, fill = historical)) + 
+    geom_density_ridges() + 
+    scale_fill_manual(values = c("blue", "purple", "red"))
+```
+
+Exercises
+
+```{r}
+# Get rid of some duplicate rows!
+grades <- read.csv("https://mac-stat.github.io/data/grades.csv") |> 
+  distinct(sid, sessionID, .keep_all = TRUE)
+
+# Check it out
+head(grades)
+```
+
+```{r}
+grade_distribution <- grades |> 
+  count(grade)
+
+head(grade_distribution)
+```
+
+
+```{r}
+grade_distribution |> 
+  ggplot(aes(x = grade, y = n)) +
+    geom_col()
+```
+
+```{r}
+grade_distribution |>
+  mutate(grade = fct_reorder(grade, n, .desc = TRUE)) |>
+  ggplot(aes(x = grade, y = n)) +
+    geom_col()
+```
+
+```{r}
+grade_distribution |>
+  mutate(grade = fct_relevel(grade, c("A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "NC", "S", "AU"))) |>
+  mutate(grade = fct_recode(grade, "Satisfactory" = "S", "Audit" = "AU")) |>  # Multiple pieces go into the last 2 blanks
+  ggplot(aes(x = grade, y = n)) +
+    geom_col()
+```
+

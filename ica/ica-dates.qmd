@@ -1,0 +1,13 @@
+```{r}
+# Get today's date
+as.Date(today())
+```
+
+```{r}
+# Let's store this as "today" so we can work with it below
+today <- as.Date(today())
+
+# Check out the class of this object
+class(today)
+```
+

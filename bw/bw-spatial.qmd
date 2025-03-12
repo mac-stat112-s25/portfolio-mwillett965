@@ -3,3 +3,27 @@ title: "Spatial Viz"
 ---
 
 Use this file to generate a professional looking **spatial** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
+
+```{r}
+elections_by_state <-  read.csv("https://mac-stat.github.io/data/election_2020_by_state.csv")
+elections_by_counties <- read.csv("https://mac-stat.github.io/data/election_2020_county.csv")
+```
+
+
+```{r}
+states_map <- map_data("state")
+library(mosaic)
+library(rnaturalearth)
+```
+
+
+```{r}
+#| fig-alt: "The grapich shoes map of the United Stated of American based on the percentage of each state population the voted Refublican in the 2020 election. Most stated falling between the range of 40% to 60% republican"
+ggplot(elections_by_state, aes(map_id = state_name, fill = repub_pct_20)) +
+  geom_map(map = states_map) +
+  expand_limits(x = states_map$long, y = states_map$lat) +
+  theme_map() + 
+  scale_fill_viridis_c() +
+  labs(fill= "Percent of State Voted Republican in 2020", caption = "A map of the United Stated of American based on the percentage of each state population the voted Refublican in the 2020 election")
+```
+

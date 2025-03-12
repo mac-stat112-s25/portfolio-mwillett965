@@ -1,0 +1,80 @@
+```{r}
+# Load tidyverse & data
+library(tidyverse)
+elections <- read.csv("https://mac-stat.github.io/data/election_2020_county.csv")
+```
+
+```{r}
+# Get a background map
+library(socviz)
+data(county_map)
+
+# Make a choropleth map
+library(RColorBrewer)  # For the color scale
+library(ggthemes) # For theme_map
+elections |> 
+  mutate(county_fips = as.character(county_fips)) |> 
+  mutate(county_fips = 
+           ifelse(nchar(county_fips) == 4, paste0("0", county_fips), county_fips)) |> 
+  ggplot(aes(map_id = county_fips, fill = cut(repub_pct_20, breaks = seq(0, 100, by = 10)))) +
+    geom_map(map = county_map) +
+    scale_fill_manual(values = rev(brewer.pal(10, "RdBu")), name = "% Republican") +
+    expand_limits(x = county_map$long, y = county_map$lat)  + 
+    theme_map() +
+    theme(legend.position = "right") + 
+    coord_equal()
+```
+
+#Exercise 1
+```{r}
+# Define elections_small
+elections_small <- elections |>
+  select(state_name, county_name, total_votes_20, repub_pct_20, dem_pct_20, total_votes_16, dem_pct_16)
+
+# Check out the first 6 rows to confirm your code did what you think it did!
+head(elections_small)
+```
+
+```{r}
+# With a pipe
+elections |> 
+  filter(state_name == "Minnesota")
+```
+#Exercise 2
+
+```{r}
+# Keep only data on counties in Hawaii
+ elections_small |>
+  filter(state_name == "Hawaii")
+```
+
+```{r}
+# What does this do?
+ elections_small |> 
+  filter(state_name %in% c("Hawaii", "Delaware"))
+```
+
+
+```{r}
+# Now try it. Change the order of filter and arrange below.
+elections_small |> 
+   filter(state_name == "Wisconsin",
+          repub_pct_20 < dem_pct_20) |> 
+   arrange(desc(total_votes_20)) |> 
+   head()
+```
+
+```{r}
+elections_small |> 
+   filter(state_name == "Delaware") |> 
+   mutate(repub_win_20 = repub_pct_20 > dem_pct_20) |> 
+   select(county_name, repub_pct_20, dem_pct_20, repub_win_20)
+```
+
+```{r}
+# What did this code do?
+elections_small |> 
+   mutate(diff_20 = repub_pct_20 - dem_pct_20) |> 
+   head()
+```
+
