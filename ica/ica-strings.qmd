@@ -1,0 +1,100 @@
+```{r}
+library(tidyverse)
+
+classes <- data.frame(
+  sem        = c("SP2023", "FA2023", "SP2024"),
+  area       = c("History", "Math", "Anthro"),
+  enroll     = c("30 - people", "20 - people", "25 - people"),
+  instructor = c("Ernesto Capello", "Lori Ziegelmeier", "Arjun Guneratne")
+)
+
+classes
+```
+
+```{r}
+# How can we do this after mutating?
+classes |> 
+  mutate(spring = str_detect(sem, "SP"))
+
+# We don't have to mutate first!
+classes |> 
+  filter(str_detect(sem, "SP"))
+
+# Yet another way
+classes |> 
+  filter(!str_detect(sem, "FA"))
+```
+Exercises
+
+```{r}
+courses <- read.csv("https://mac-stat.github.io/data/registrar.csv")
+
+# Check it out
+head(courses)
+```
+
+```{r}
+# Change the areas to "history", "math", "anthro"
+classes |> 
+  mutate(area = str_to_lower(area))
+```
+
+```{r}
+# Create a variable that id's which courses were taught in spring 
+classes |> 
+  mutate(spring = str_detect(sem, "SP"))
+```
+
+```{r}
+# Construct a table that indicates the number of classes offered in each day/time slot
+# Print only the 6 most popular time slots
+courses |> 
+  count(days, time) |> 
+  arrange(desc(n)) |> 
+  head()
+
+```
+
+```{r}
+courses_clean <- courses |> 
+  separate(avail_max, c("avail", "max"), sep = " / ") |> 
+  mutate(enroll = as.numeric(max) - as.numeric(avail)) |> 
+  separate(number, c("dept", "number", "section"))
+  
+head(courses_clean)
+```
+
+```{r}
+# Identify the 6 departments that offered the most sections
+courses_clean |> 
+  count(dept) |> 
+  arrange(desc(n)) |> 
+  head()
+```
+
+```{r}
+courses_clean |> 
+  filter(str_detect(instructor, "Alicia Johnson")) 
+```
+
+```{r}
+stat <- courses_clean |> 
+  filter(dept == "STAT") |> 
+  mutate(name = str_replace(name, "Introduction to ", "")) |>
+  mutate(name = str_replace(name, "Statistical", "Stat")) |> 
+  mutate(start_time = str_sub(time, 1, 5)) |> 
+  select(number, name, start_time, enroll)
+
+stat
+```
+
+```{r}
+enrollments <- courses_clean |> 
+  filter(dept != "PE", dept != "INTD") |> 
+  filter(!(dept == "MUSI" & as.numeric(number) < 100)) |> 
+  filter(!(dept == "THDA" & as.numeric(number) < 100)) |> 
+  filter(!str_detect(section, "L"))
+  
+head(enrollments)
+```
+
