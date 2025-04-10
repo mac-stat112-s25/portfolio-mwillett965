@@ -28,8 +28,8 @@ ggplot(weather, aes(x = temp3pm)) +
 ```
 
 ```{r}
-ggplot(weather, aes(x = temp3pm)) + geom_histogram +
-  facet_wrap(~ historical)
+#ggplot(weather, aes(x = temp3pm)) + geom_histogram +
+#  facet_wrap(~ historical)
 ```
 
 ```{r}
@@ -129,20 +129,20 @@ ggplot(education, aes(y = expend, x = sat, color = fracCat)) +
 ```
 
 ```{r}
-stars(plot_data,
-  flip.labels = FALSE,
-  key.loc = c(10, 1.5),
-  cex = 1, 
-  draw.segments = TRUE
-)
+#stars(plot_data,
+ # flip.labels = FALSE,
+ # key.loc = c(10, 1.5),
+ # cex = 1, 
+ # draw.segments = TRUE
+#)
 ```
 ```{r}
-stars(plot_data,
-  flip.labels = FALSE,
-  locations = data.matrix(as.data.frame(state.center)),  # added external data to arrange by geo location
-  key.loc = c(-110, 28),
-  cex = 1, 
-  draw.segments = TRUE
-)
+#stars(plot_data,
+ # flip.labels = FALSE,
+#  locations = data.matrix(as.data.frame(state.center)),  # added external data to arrange by geo location
+#  key.loc = c(-110, 28),
+#  cex = 1, 
+#  draw.segments = TRUE
+#)
 ```
 

@@ -4,14 +4,16 @@
 library(tidyverse)
 library(rnaturalearth)
 library(sf)
+library(mosaic)
+library(maps)
+library(gplots)
 ```
 
 ```{r}
 covid <- read_csv("~/Documents/GitHub/portfolio-mwillett965/bw/222c9d85e93540dba523939cfb718d76_0.csv")
 
 
-co_counties <- map_data("county") |>
-  filter(region == "colorado")
+co_counties <- map_data("county", "colorado") 
 
 
 ```
@@ -30,10 +32,13 @@ covid_county <- covid_cases |>
   left_join(co_counties, join_by(county == subregion)) 
 ```
 
-
 ```{r}
-ggplot(covid_county, aes(map_id = county, fill = County_Pos_Cases)) +
-  geom_map(map = covid_county) +
-  expand_limits(x = covid_county, y = covid_county$lat) 
+#| fig-alt: "The map shows the number of positive covid 19 reports in the State of Colordo. The state is seperated by county with most counties under 2000 reported positives. There is a viricle row of counties with higer case numbers on the eastern half of the state."
+ggplot(covid_county) + 
+  geom_polygon(aes(x = long, y = lat, group = group, fill = County_Pos_Cases)) +
+  scale_fill_viridis_c() +
+  labs(x =" ", y = " ", fill = "Positive Cases", title = "Positive Covid 19 cases in Colorado by County", caption = "The map shows the number of positive covid 19 reports in the State of Colordo. The state is seperated by county with most counties under 2000 reported positives." )
+
 ```
+
 

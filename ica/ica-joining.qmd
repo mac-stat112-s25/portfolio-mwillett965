@@ -51,12 +51,12 @@ enrollments_2
 
 ```{r}
 # eval = FALSE: don't evaluate this chunk when knitting. it produces an error.
-students_2 |> 
-  left_join(enrollments_2)
+#students_2 |> 
+#  left_join(enrollments_2)
 ```
 ```{r}
-students_2 |> 
-  left_join(enrollments_2, join_by(class == course))
+#students_2 |> 
+#  left_join(enrollments_2, join_by(class == course))
 ```
 
 ```{r}
