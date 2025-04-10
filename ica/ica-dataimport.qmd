@@ -1,0 +1,6 @@
+```{r}
+library(tidyverse)
+ imdb_messy <- read_csv("~/Desktop/portfolio/data/imdb_5000_messy.csv
+")
+```
+

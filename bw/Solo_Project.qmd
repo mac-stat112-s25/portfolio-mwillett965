@@ -1,0 +1,39 @@
+
+
+```{r}
+library(tidyverse)
+library(rnaturalearth)
+library(sf)
+```
+
+```{r}
+covid <- read_csv("~/Documents/GitHub/portfolio-mwillett965/bw/222c9d85e93540dba523939cfb718d76_0.csv")
+
+
+co_counties <- map_data("county") |>
+  filter(region == "colorado")
+
+
+```
+
+```{r}
+covid_cases <- covid |>
+    mutate(county = str_to_lower(COUNTY)) |>
+  select(county, County_Pos_Cases, County_Rate_Per_100_000 ) |>
+  filter(county != "out of state") |>
+  filter(county != "unknown")
+  
+```
+
+```{r}
+covid_county <- covid_cases |>
+  left_join(co_counties, join_by(county == subregion)) 
+```
+
+
+```{r}
+ggplot(covid_county, aes(map_id = county, fill = County_Pos_Cases)) +
+  geom_map(map = covid_county) +
+  expand_limits(x = covid_county, y = covid_county$lat) 
+```
+
