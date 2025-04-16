@@ -1,2 +1,95 @@
- # Summary sheet
-  #
+ 
+#Summary sheet
+Wrangling
+Purpose
+keep only certain observations
+Define new variables
+Reformat existing variables
+combine datasets
+Verbs
+Arrange- arrange rows according to a column
+Ex- ascending or descending order (desc)
+Filter - select or remove rows
+Ex- filter(data, column name == “value”)
+Select - select columns 
+Ex- select(dataset, c(column name))
+Mutate - create columns
+Summarize- calculate something from a column
+Sum, median ect
+Group-by - group rows by a column
+Symbols
+==    equal to
+!= not equal
+%in% c   multiple values
+>, <, >=, <= grater than etc
+Dates
+Labeling numerical dates with as.Date label = true
+For dayes of week, month names, ect
+Also with NA values
+Ex is.na = true of na.omit
+Reshaping
+Pivote longer - colapes column to make longer
+Pivot longer ( cols = c(), names_to =- , values_to = )
+Pivot wider - expands 1 column to 2 making wider
+Pivot wider( names_from,     values _from,     )
+Joininging
+Combining two data sets through a common factor.
+left_join()- Keeps all observations from the left, but discards any observations in the right that do not have a match in the left.
+inner_join()- Keeps only the observations from the left with a match in the right.
+full_join()- Keeps all observations from the left and the right.
+semi_join()- Discards any observations in the left table that do not have a match in the right table. If there are multiple matches of right cases to a left case, it keeps just one copy of the left case.
+anti_join()- Discards any observations in the left table that do have a match in the right table.
+
+
+Factors
+Reorganizes data when presented into a more meaningful format
+fct_relevel() - based on levels
+Fct_recode- changes labels once sorted
+Better when using Joy plot or ridge plots
+For reordering
+fct_relevel() = manually reorder levels
+fct_reorder() = reorder levels according to values of another variable
+fct_infreq() = order levels from highest to lowest frequency
+fct_rev() = reverse the current order
+Fro labling
+fct_recode() = manually change levels
+fct_lump() = group together least common levels
+Strings
+Most common functions
+str_replace(x, pattern, replacement) -finds the first part of x that matches the pattern and replaces it with replacement
+str_replace_all(x, pattern, replacement)- finds all instances in x that matches the pattern and replaces it with replacement
+str_to_lower(x) -converts all upper case letters in x to lower case
+str_sub(x, start, end) -only keeps a subset of characters in x, from start (a number indexing the first letter to keep) to end (a number indexing the last letter to keep)
+str_length(x) -records the number of characters in x
+str_detect(x, pattern) -is TRUE if x contains the given pattern and FALSE otherwise
+
+# Research Question
+
+```{r}
+library(tidytuesdayR)
+library(tidyverse)
+
+tuesdata <- tt_load('2020-02-18')
+fc <- tuesdata$food_consumption
+```
+
+```{r}
+#Question 1
+fc |>
+  group_by(country) |>
+  sum(consumption) |>
+  arrange(desc(consumption)) |>
+  head(5)
+```
+
+```{r}
+#Question 2
+fc |>
+  group_by(food_category) |>
+  summarize(max(consumption)) |>
+  select(food_category, country, consumption) |>
+  slice_max() |>
+  arrange(desc(consumption)) 
+```
+
+
