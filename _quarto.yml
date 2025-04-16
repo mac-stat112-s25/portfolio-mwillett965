@@ -49,7 +49,7 @@ book:
     - part: "Summary"
       chapters: 
       - Summary/Exam_1_summary.qmd
-
+      - Summary/Exam_2_summary.qmd
 format:
   html:
     theme:
